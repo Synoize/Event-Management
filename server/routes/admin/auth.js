@@ -1,0 +1,22 @@
+import { Router } from 'express';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { User } from '../../models/User.js';
+import { validateBody } from '../../middleware/validate.js';
+import { adminLoginSchema } from '../../validations/authSchemas.js';
+
+export const adminAuthRouter = Router();
+
+adminAuthRouter.post('/login', validateBody(adminLoginSchema), async (req, res) => {
+  const { email, password } = req.body;
+  const admin = await User.findOne({ email, role: 'admin' });
+  if (!admin) return res.status(401).json({ message: 'Invalid credentials' });
+  const ok = await bcrypt.compare(password, admin.passwordHash);
+  if (!ok) return res.status(401).json({ message: 'Invalid credentials' });
+  const options = {
+    expiresIn: process.env.JWT_ACCESS_EXPIRES_IN || '15m',
+  };
+  const accessSecret = process.env.JWT_ACCESS_SECRET || 'access_secret';
+  const token = jwt.sign({ userId: admin.id, role: 'admin' }, accessSecret, options);
+  res.json({ user: { id: admin.id, email: admin.email, role: admin.role }, accessToken: token });
+});
