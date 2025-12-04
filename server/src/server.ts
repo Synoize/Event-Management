@@ -1,11 +1,14 @@
+import dotenv from 'dotenv';
+
+// Load environment variables as early as possible so modules that
+// read `process.env` at import-time get the correct values.
+dotenv.config();
+
 import http from 'http';
 import { Server as SocketIOServer } from 'socket.io';
-import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { createApp } from './app';
 import { registerChatHandlers } from './sockets/chat';
-
-dotenv.config();
 
 const PORT = process.env.PORT;
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/event_management';
@@ -27,7 +30,7 @@ async function start() {
   await mongoose.connect(MONGO_URI);
   console.log("database connected");
   server.listen(PORT, () => {
-    console.log(`Server running on port http://localhost:${PORT}`);
+    console.log(`Server running on port: http://localhost:${PORT}`);
   });
 }
 

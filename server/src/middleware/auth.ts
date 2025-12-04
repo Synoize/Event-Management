@@ -18,13 +18,18 @@ const getAccessSecret = () => process.env.JWT_ACCESS_SECRET || 'access_secret';
 
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
+  
   if (!authHeader?.startsWith('Bearer ')) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
   const token = authHeader.split(' ')[1];
+  
   try {
     const payload = jwt.verify(token, getAccessSecret()) as AuthPayload;
+    console.log("payload: ", payload);
+    
     const user = await User.findById(payload.userId);
+
     if (!user || user.isSuspended) {
       return res.status(401).json({ message: 'Unauthorized' });
     }

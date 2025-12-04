@@ -1,16 +1,18 @@
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt, { SignOptions, Secret } from 'jsonwebtoken';
+import { OAuth2Client } from 'google-auth-library';
 import { User } from '../../models/User';
 import { validateBody } from '../../middleware/validate';
 import { loginSchema, registerSchema } from '../../validations/authSchemas';
 
 export const participantAuthRouter = Router();
 
-const accessSecret: Secret = process.env.JWT_ACCESS_SECRET || 'access_secret';
-const refreshSecret: Secret = process.env.JWT_REFRESH_SECRET || 'refresh_secret';
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const signTokens = (userId: string) => {
+  const accessSecret: Secret = process.env.JWT_ACCESS_SECRET || 'access_secret';
+  const refreshSecret: Secret = process.env.JWT_REFRESH_SECRET || 'refresh_secret';
   const accessOptions: SignOptions = {
     expiresIn: (process.env.JWT_ACCESS_EXPIRES_IN || '15m') as any,
   };
@@ -35,7 +37,7 @@ participantAuthRouter.post('/register', validateBody(registerSchema), async (req
     isEmailVerified: false,
   });
   const tokens = signTokens(user.id);
-  res.status(201).json({ user: { id: user.id, name: user.name, email: user.email }, ...tokens });
+  res.status(201).json({ user: { id: user.id, name: user.name, email: user.email, role: user.role }, ...tokens });
 });
 
 participantAuthRouter.post('/login', validateBody(loginSchema), async (req, res) => {
@@ -45,7 +47,57 @@ participantAuthRouter.post('/login', validateBody(loginSchema), async (req, res)
   const ok = await bcrypt.compare(password, user.passwordHash);
   if (!ok) return res.status(401).json({ message: 'Invalid credentials' });
   const tokens = signTokens(user.id);
-  res.json({ user: { id: user.id, name: user.name, email: user.email }, ...tokens });
+  res.json({ user: { id: user.id, name: user.name, email: user.email, role: user.role }, ...tokens });
+});
+
+// Google OAuth login/register
+participantAuthRouter.post('/google', async (req, res) => {
+  try {
+    const { credential } = req.body;
+    if (!credential) {
+      return res.status(400).json({ message: 'Google credential is required' });
+    }
+
+    const ticket = await googleClient.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+    if (!payload) {
+      return res.status(400).json({ message: 'Invalid Google token' });
+    }
+
+    const { email, name, sub: googleId } = payload;
+
+    if (!email) {
+      return res.status(400).json({ message: 'Email not provided by Google' });
+    }
+
+    // Check if user exists
+    let user = await User.findOne({ email, role: 'participant' });
+
+    if (!user) {
+      // Create new user with a random password (they'll use Google to login)
+      const passwordHash = await bcrypt.hash(googleId + Date.now(), 10);
+      user = await User.create({
+        name: name || 'User',
+        email,
+        passwordHash,
+        role: 'participant',
+        isEmailVerified: true,
+      });
+    }
+
+    const tokens = signTokens(user.id);
+    res.json({
+      user: { id: user.id, name: user.name, email: user.email, role: user.role },
+      ...tokens,
+    });
+  } catch (error: any) {
+    console.error('Google OAuth error:', error);
+    res.status(400).json({ message: 'Google authentication failed', error: error.message });
+  }
 });
 
 

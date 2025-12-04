@@ -4,6 +4,7 @@ export const eventBaseSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
   images: z.array(z.string()).optional(),
+  city: z.string().min(1),
   location: z.object({
     type: z.literal('Point'),
     coordinates: z.tuple([z.number(), z.number()]), // [lng, lat]
@@ -34,6 +35,7 @@ export const participantSearchSchema = z.object({
     .optional(),
   startDate: z.string().optional(),
   endDate: z.string().optional(),
+  city: z.string().optional(),
   lat: z.string().optional(),
   lng: z.string().optional(),
   radiusKm: z.string().optional(),

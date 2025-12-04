@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
-import { authenticate, requireOrganizer } from '../../middleware/auth';
+import { authenticate, requireOrganizer, requireRole } from '../../middleware/auth';
 import { validateBody } from '../../middleware/validate';
 import { eventCreateSchema, eventUpdateSchema } from '../../validations/eventSchemas';
 import { Event } from '../../models/Event';
@@ -12,10 +12,12 @@ export const organizerEventRouter = Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
 // Upload single event image to Cloudinary, returns URL
+// Allow any organizer (role) to upload images so new organizers can create events;
+// stricter verification is enforced for updating/deleting events.
 organizerEventRouter.post(
   '/upload-image',
   authenticate,
-  requireOrganizer,
+  requireRole('organizer'),
   upload.single('image'),
   async (req, res) => {
     const file = (req as any).file as Express.Multer.File | undefined;
@@ -44,7 +46,9 @@ organizerEventRouter.post(
 organizerEventRouter.post(
   '/',
   authenticate,
-  requireOrganizer,
+  // Allow organizer role to create events even if verification is pending;
+  // events can be programmatically set to a draft/pending state if desired.
+  requireRole('organizer'),
   validateBody(eventCreateSchema),
   async (req, res) => {
     const organizerId = req.user!._id;
@@ -85,10 +89,10 @@ organizerEventRouter.delete('/:id', authenticate, requireOrganizer, async (req, 
 });
 
 // List organizer events with pagination
-organizerEventRouter.get('/', authenticate, requireOrganizer, async (req, res) => {
+organizerEventRouter.get('/', authenticate, requireRole('organizer'), async (req, res) => {
   const organizerId = req.user!._id;
-  const page = parseInt((req.query.page as string) || '1', 10);
-  const limit = parseInt((req.query.limit as string) || '10', 10);
+  const page = Math.max(1, parseInt((req.query.page as string) || '1', 10));
+  const limit = Math.max(1, Math.min(100, parseInt((req.query.limit as string) || '10', 10)));
   const events = await Event.find({ organizerId })
     .skip((page - 1) * limit)
     .limit(limit)
@@ -98,7 +102,7 @@ organizerEventRouter.get('/', authenticate, requireOrganizer, async (req, res) =
 });
 
 // Attendees list
-organizerEventRouter.get('/:id/attendees', authenticate, requireOrganizer, async (req, res) => {
+organizerEventRouter.get('/:id/attendees', authenticate, requireRole('organizer'), async (req, res) => {
   const organizerId = req.user!._id;
   const event = await Event.findOne({ _id: req.params.id, organizerId });
   if (!event) return res.status(404).json({ message: 'Event not found' });

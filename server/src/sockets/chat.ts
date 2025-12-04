@@ -13,10 +13,15 @@ export const registerChatHandlers = (io: Server) => {
           role: 'participant' | 'organizer' | 'admin';
         };
         const user = await User.findById(payload.userId);
-        if (!user) return socket.disconnect();
+        if (!user) {
+          socket.emit('unauthorized', { message: 'User not found' });
+          return socket.disconnect();
+        }
         (socket as any).user = user;
         socket.emit('authenticated');
-      } catch {
+      } catch (err: any) {
+        // emit an error event for easier debugging and then disconnect
+        socket.emit('unauthorized', { message: 'Invalid token', error: err?.message });
         socket.disconnect();
       }
     });

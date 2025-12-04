@@ -5,6 +5,7 @@ export interface IEvent extends Document {
   title: string;
   description: string;
   images: string[];
+  city: string;
   location: {
     type: 'Point';
     coordinates: [number, number]; // [lng, lat]
@@ -26,6 +27,7 @@ const eventSchema = new Schema<IEvent>(
     title: { type: String, required: true },
     description: { type: String, required: true },
     images: [String],
+    city: { type: String, required: true },
     location: {
       type: {
         type: String,

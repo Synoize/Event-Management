@@ -7,10 +7,9 @@ import { loginSchema, organizerRegisterSchema } from '../../validations/authSche
 
 export const organizerAuthRouter = Router();
 
-const accessSecret: Secret = process.env.JWT_ACCESS_SECRET || 'access_secret';
-const refreshSecret: Secret = process.env.JWT_REFRESH_SECRET || 'refresh_secret';
-
 const signOrganizerTokens = (userId: string) => {
+  const accessSecret: Secret = process.env.JWT_ACCESS_SECRET || 'access_secret';
+  const refreshSecret: Secret = process.env.JWT_REFRESH_SECRET || 'refresh_secret';
   const accessOptions: SignOptions = {
     expiresIn: (process.env.JWT_ACCESS_EXPIRES_IN || '15m') as any,
   };
@@ -43,7 +42,7 @@ organizerAuthRouter.post(
     const tokens = signOrganizerTokens(user.id);
     res
       .status(201)
-      .json({ user: { id: user.id, name: user.name, email: user.email }, ...tokens });
+      .json({ user: { id: user.id, name: user.name, email: user.email, role: user.role }, ...tokens });
   }
 );
 
@@ -54,7 +53,5 @@ organizerAuthRouter.post('/login', validateBody(loginSchema), async (req, res) =
   const ok = await bcrypt.compare(password, user.passwordHash);
   if (!ok) return res.status(401).json({ message: 'Invalid credentials' });
   const tokens = signOrganizerTokens(user.id);
-  res.json({ user: { id: user.id, name: user.name, email: user.email }, ...tokens });
+  res.json({ user: { id: user.id, name: user.name, email: user.email, role: user.role }, ...tokens });
 });
-
-
