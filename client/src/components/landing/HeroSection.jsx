@@ -21,7 +21,7 @@ const HeroSection = () => {
             Get Access To
           </span>
 
-          <h1 className="text-4xl md:text-7xl font-extrabold text-gray-900 mt-4 leading-[550px] text-center md:text-start">
+          <h1 className="text-4xl md:text-7xl font-extrabold text-gray-900 mt-4 leading-tight text-center md:text-start">
             Transform Your  <br /> Events With 
           </h1>
 

@@ -127,7 +127,7 @@ const Navbar = () => {
                 </>
 
               ) : (
-                <>
+                <div className="hidden md:block">
                   <Link className="px-4 py-2" to="/login">
                     Login
                   </Link>
@@ -137,7 +137,7 @@ const Navbar = () => {
                   >
                     Register
                   </Link>
-                </>
+                </div>
               )}
             </div>
 

@@ -22,7 +22,7 @@ const OrganizerEvents = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-pink"></div>
       </div>
     );
   }
@@ -30,10 +30,10 @@ const OrganizerEvents = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">My Events</h1>
+        <h1 className="text-3xl font-semibold text-gray-600">My Events</h1>
         <Link
           to="/organizer/create-event"
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium"
+          className="bg-primary-pink/90 hover:bg-primary-pink text-white px-4 py-2 rounded-md text-sm font-medium"
         >
           Create Event
         </Link>
@@ -41,10 +41,10 @@ const OrganizerEvents = () => {
 
       {events.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-500 text-lg mb-4">You haven't created any events yet.</p>
+          <p className="text-gray-500 text-sm mb-4">You haven't created any events yet.</p>
           <Link
             to="/organizer/create-event"
-            className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md font-medium"
+            className="inline-block bg-primary-pink/90 hover:bg-primary-pink text-white px-6 py-3 rounded-md text-sm font-medium"
           >
             Create Your First Event
           </Link>
@@ -54,7 +54,7 @@ const OrganizerEvents = () => {
           {events.map((event) => (
             <div
               key={event._id}
-              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+              className="bg-white rounded-lg overflow-hidden transition-shadow"
             >
               {event.images && event.images[0] && (
                 <img
@@ -85,7 +85,7 @@ const OrganizerEvents = () => {
                 <div className="flex space-x-2">
                   <Link
                     to={`/organizer/events/${event._id}/edit`}
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-center px-4 py-2 rounded-md text-sm font-medium"
+                    className="flex-1 bg-primary-pink/90 hover:bg-primary-pink text-white text-center px-4 py-2 rounded-md text-sm font-medium"
                   >
                     Edit
                   </Link>
