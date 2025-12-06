@@ -17,11 +17,11 @@ const Login = () => {
     let result;
 
     if (role === 'participant') {
-      result = await participantLogin(email, password);
+      result = await participantLogin(email.toLowerCase(), password);
     } else if (role === 'organizer') {
-      result = await organizerLogin(email, password);
+      result = await organizerLogin(email.toLowerCase(), password);
     } else if (role === 'admin') {
-      result = await adminLogin(email, password);
+      result = await adminLogin(email.toLowerCase(), password);
     }
 
     setLoading(false);

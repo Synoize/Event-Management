@@ -41,13 +41,13 @@ const Register = () => {
     if (formData.role === 'participant') {
       result = await participantRegister({
         name: formData.name,
-        email: formData.email,
+        email: formData.email.toLowerCase(),
         password: formData.password,
       });
     } else if (formData.role === 'organizer') {
       result = await organizerRegister({
         name: formData.name,
-        email: formData.email,
+        email: formData.email.toLowerCase(),
         password: formData.password,
         organizationName: formData.organizationName,
         officialId: formData.officialId,
@@ -201,7 +201,7 @@ const Register = () => {
               disabled={loading}
               className="group relative w-full h-10 flex justify-center items-center border border-transparent text-sm font-medium rounded-md text-white bg-primary-pink/90 hover:bg-primary-pink disabled:opacity-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-primary-pink"
             >
-              {!loading ? (
+              {loading ? (
                 <div className="animate-spin rounded-full h-4 w-4 border-2 border-white"></div>
               ) : 'Register'}
             </button>
