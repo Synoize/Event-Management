@@ -22,13 +22,13 @@ const OrganizerEvents = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-pink"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border border-t-0 border-primary-pink"></div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl max-h-[88vh] mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-semibold text-gray-600">My Events</h1>
         <Link
@@ -50,11 +50,11 @@ const OrganizerEvents = () => {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 h-full overflow-y-scroll">
           {events.map((event) => (
             <div
               key={event._id}
-              className="bg-white rounded-lg overflow-hidden transition-shadow"
+              className="bg-gray-50 border border-gray-100"
             >
               {event.images && event.images[0] && (
                 <img
@@ -64,17 +64,16 @@ const OrganizerEvents = () => {
                 />
               )}
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{event.title}</h3>
-                <p className="text-gray-600 text-sm mb-4 line-clamp-2">{event.description}</p>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 first-letter:uppercase">{event.title}</h3>
+                <p className="text-gray-600 text-sm mb-4 line-clamp-2 first-letter:uppercase">{event.description}</p>
                 <div className="flex justify-between items-center mb-4">
                   <span
-                    className={`px-3 py-1 rounded-full text-sm font-medium ${
-                      event.status === 'published'
+                    className={`px-4 py-2 rounded-full text-xs font-medium first-letter:uppercase ${event.status === 'published'
                         ? 'bg-green-100 text-green-800'
                         : event.status === 'draft'
-                        ? 'bg-gray-100 text-gray-800'
-                        : 'bg-red-100 text-red-800'
-                    }`}
+                          ? 'bg-gray-100 text-gray-800'
+                          : 'bg-red-100 text-red-800'
+                      }`}
                   >
                     {event.status}
                   </span>

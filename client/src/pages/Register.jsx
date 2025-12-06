@@ -199,9 +199,11 @@ const Register = () => {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-pink/90 hover:bg-primary-pink disabled:opacity-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-primary-pink"
+              className="group relative w-full h-10 flex justify-center items-center border border-transparent text-sm font-medium rounded-md text-white bg-primary-pink/90 hover:bg-primary-pink disabled:opacity-50 focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-primary-pink"
             >
-              {loading ? 'Creating account...' : 'Register'}
+              {!loading ? (
+                <div className="animate-spin rounded-full h-4 w-4 border-2 border-white"></div>
+              ) : 'Register'}
             </button>
           </div>
 

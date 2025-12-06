@@ -27,10 +27,10 @@ const CreateEvent = () => {
   const handleImageUpload = async (e) => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
-    
+
     setUploadingImages(true);
     const uploadedImages = [...formData.images];
-    
+
     try {
       for (const file of files) {
         const result = await uploadEventImage(file);
@@ -93,7 +93,7 @@ const CreateEvent = () => {
       tags: formData.tags ? formData.tags.split(',').map((t) => t.trim()).filter(Boolean) : [],
       location: {
         type: 'Point',
-        coordinates: [0, 0], // geocoding can be added later
+        coordinates: [0, 0],
       },
       status: 'draft',
     };
@@ -113,88 +113,88 @@ const CreateEvent = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Create Event</h1>
-      
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-8 space-y-6">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h1 className="text-3xl font-semibold text-gray-600 mb-6">Create Event</h1>
+
+      <form onSubmit={handleSubmit} className="md:p-2 space-y-4 text-sm">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+          <label className="block font-medium text-gray-700 mb-2">Title</label>
           <input
             type="text"
             name="title"
             required
             value={formData.title}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 outline-none border border-gray-300 rounded-md focus:border-primary-pink"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+          <label className="block font-medium text-gray-700 mb-2">Description</label>
           <textarea
             name="description"
             required
-            rows="4"
+            rows="3"
             value={formData.description}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 outline-none border border-gray-300 rounded-md focus:border-primary-pink"
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
+            <label className="block font-medium text-gray-700 mb-2">City</label>
             <input
               type="text"
               name="city"
               required
               value={formData.city}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 outline-none border border-gray-300 rounded-md focus:border-primary-pink"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Address</label>
+            <label className="block font-medium text-gray-700 mb-2">Address</label>
             <input
               type="text"
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 outline-none border border-gray-300 rounded-md focus:border-primary-pink"
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Start Time</label>
+            <label className="block font-medium text-gray-700 mb-2">Start Time</label>
             <input
               type="datetime-local"
               name="startTime"
               required
               value={formData.startTime}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 outline-none border border-gray-300 rounded-md focus:border-primary-pink"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">End Time</label>
+            <label className="block font-medium text-gray-700 mb-2">End Time</label>
             <input
               type="datetime-local"
               name="endTime"
               required
               value={formData.endTime}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 outline-none border border-gray-300 rounded-md focus:border-primary-pink"
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Capacity</label>
+            <label className="block font-medium text-gray-700 mb-2">Capacity</label>
             <input
               type="number"
               name="capacity"
@@ -202,12 +202,12 @@ const CreateEvent = () => {
               min="1"
               value={formData.capacity}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 outline-none border border-gray-300 rounded-md focus:border-primary-pink"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Enrollment Fee (₹)</label>
+            <label className="block font-medium text-gray-700 mb-2">Enrollment Fee (₹)</label>
             <input
               type="number"
               name="enrollmentFee"
@@ -216,32 +216,32 @@ const CreateEvent = () => {
               step="0.01"
               value={formData.enrollmentFee}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 outline-none border border-gray-300 rounded-md focus:border-primary-pink"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+          <label className="block font-medium text-gray-700 mb-2">Category</label>
           <input
             type="text"
             name="category"
             required
             value={formData.category}
             onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 outline-none border border-gray-300 rounded-md focus:border-primary-pink"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Tags (comma separated)</label>
+          <label className="block font-medium text-gray-700 mb-2">Tags (comma separated)</label>
           <input
             type="text"
             name="tags"
             value={formData.tags}
             onChange={handleChange}
             placeholder="music, concert, live"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 outline-none border border-gray-300 rounded-md focus:border-primary-pink"
           />
         </div>
 
@@ -252,10 +252,12 @@ const CreateEvent = () => {
             multiple
             accept="image/*"
             onChange={handleImageUpload}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 outline-none border border-gray-300 rounded-md focus:border-primary-pink"
           />
           {uploadingImages && (
-            <p className="mt-2 text-sm text-gray-500">Uploading images...</p>
+            <div>
+              <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary-pink"></div>
+            </div>
           )}
           {formData.images.length > 0 && (
             <div className="mt-4 grid grid-cols-4 gap-4">
@@ -279,18 +281,20 @@ const CreateEvent = () => {
           )}
         </div>
 
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 text-sm pt-4">
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-md font-medium disabled:opacity-50"
+            className="flex-1 flex justify-center items-center bg-primary-pink/90 hover:bg-primary-pink text-white rounded-md font-medium disabled:opacity-50 h-10"
           >
-            {loading ? 'Creating...' : 'Create Event'}
+            {loading ? (
+              <div className="animate-spin rounded-full h-4 w-4 border-2 border-white"></div>
+            ) : 'Create Event'}
           </button>
           <button
             type="button"
             onClick={() => navigate('/organizer/events')}
-            className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 py-3 px-4 rounded-md font-medium"
+            className="flex-1 bg-gray-300/90 hover:bg-gray-300 text-gray-800 rounded-md font-medium h-10"
           >
             Cancel
           </button>

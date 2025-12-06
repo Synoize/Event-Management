@@ -21,7 +21,7 @@ console.log("user: ", user);
             <div className="max-w-3xl mx-auto bg-gray-50 p-6 md:p-10 border">
 
                 {/* Header */}
-                <h1 className="text-3xl md:text-4xl font-semibold text-gray-600 text-center mb-8">
+                <h1 className="text-3xl font-semibold text-gray-600 text-center mb-8">
                     My Profile
                 </h1>
 
@@ -44,15 +44,15 @@ console.log("user: ", user);
                         </span>
 
                         <div>
-                            <p className="text-gray-500 text-sm">Full Name</p>
-                            <p className="text-lg md:text-xl font-semibold text-gray-500">
+                            <p className="text-gray-500 font-medium">Full Name</p>
+                            <p className="text-gray-500 text-sm">
                                 {user?.name || "User"}
                             </p>
                         </div>
 
                         <div>
-                            <p className="text-gray-500 text-sm">Email</p>
-                            <p className="text-lg font-medium text-gray-500">
+                            <p className="text-gray-500 font-medium">Email</p>
+                            <p className="text-gray-500 text-sm">
                                 {user?.email || "example@mail.com"}
                             </p>
                         </div>

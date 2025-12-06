@@ -105,7 +105,7 @@ const Events = () => {
 
       {loading ? (
         <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-pink"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border border-t-0 border-primary-pink"></div>
         </div>
       ) : (
         <div className={`grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 ${events.length >= 0 ? 'h-[80vh] md:h-[70vh] overflow-y-scroll ' : ''}`}>

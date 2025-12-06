@@ -15,7 +15,7 @@ const MyEnrollments = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-pink"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border border-t-0 border-primary-pink"></div>
       </div>
     );
   }
@@ -38,7 +38,7 @@ const MyEnrollments = () => {
           </button>
         </div>
       ) : (
-        <div className="flex flex-col h-[80vh] overflow-y-scroll">
+        <div className="flex flex-col gap-4 h-[80vh] overflow-y-scroll">
           {enrollments.map((enrollment) => {
             const event = enrollment.eventId;
             if (!event) return null;
@@ -72,11 +72,11 @@ const MyEnrollments = () => {
                   {enrollment.status}
                 </span>
               </Link>
-      );
+            );
           })}
-    </div>
-  )
-}
+        </div>
+      )
+      }
     </div >
   );
 };

@@ -15,7 +15,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     let result;
-    
+
     if (role === 'participant') {
       result = await participantLogin(email, password);
     } else if (role === 'organizer') {
@@ -34,7 +34,7 @@ const Login = () => {
       } else if (role === 'admin') {
         navigate('/admin/dashboard');
       }
-    } 
+    }
   };
 
   if (isAuthenticated) {
@@ -46,7 +46,7 @@ const Login = () => {
     <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div className='flex flex-col items-center'>
-          <img src={assets.logo} alt="" className='h-14 md:h-20'/>
+          <img src={assets.logo} alt="" className='h-14 md:h-20' />
           <h2 className="mt-6 self-start text-xl md:text-4xl text-gray-900">
             Sign in to your account
           </h2>
@@ -105,9 +105,11 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-pink/90 hover:bg-primary-pink disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-primary-pink"
+              className="group relative w-full h-10 flex justify-center items-center border border-transparent text-sm font-medium rounded-md text-white bg-primary-pink/90 hover:bg-primary-pink disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-1 focus:ring-offset-2 focus:ring-primary-pink"
             >
-              {loading ? 'Signing in...' : 'Sign in'}
+              {loading ? (
+                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-white"></div>
+              ) : 'Sign in'}
             </button>
           </div>
 
