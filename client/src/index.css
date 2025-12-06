@@ -9,6 +9,10 @@
   --primary-black: #000;
 }
 
+::-webkit-scrollbar{
+    @apply hidden
+}
+
 *{
   scroll-behavior: smooth;
 }

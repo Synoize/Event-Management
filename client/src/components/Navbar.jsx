@@ -158,7 +158,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {mobileOpen && (
-        <div className="fixed sm:hidden top-20 right-0 w-64 h-[88vh] bg-white/80 backdrop-blur-2xl border-l px-6 py-6 space-y-3 flex flex-col justify-between">
+        <div className="fixed sm:hidden top-20 right-0 w-64 h-[90vh] bg-white/80 backdrop-blur-2xl border-l px-6 py-6 space-y-3 flex flex-col justify-between">
           <div className="flex flex-col text-sm gap-6">
             {renderLinks(commonLinks)}
             {

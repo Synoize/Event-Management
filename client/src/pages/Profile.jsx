@@ -39,20 +39,20 @@ console.log("user: ", user);
 
                     {/* User Info */}
                     <div className="flex-1 space-y-4">
-                        <span className="inline-block bg-primary-pink/10 text-primary-pink px-4 py-2 rounded-full text-xs font-semibold">
+                        <span className="inline-block bg-primary-orange/10 text-primary-orange px-4 py-2 rounded-full text-xs font-semibold">
                             {user?.role?.toUpperCase()}
                         </span>
 
                         <div>
                             <p className="text-gray-500 text-sm">Full Name</p>
-                            <p className="text-lg md:text-xl font-semibold text-gray-800">
+                            <p className="text-lg md:text-xl font-semibold text-gray-500">
                                 {user?.name || "User"}
                             </p>
                         </div>
 
                         <div>
                             <p className="text-gray-500 text-sm">Email</p>
-                            <p className="text-lg font-medium text-gray-800">
+                            <p className="text-lg font-medium text-gray-500">
                                 {user?.email || "example@mail.com"}
                             </p>
                         </div>

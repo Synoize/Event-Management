@@ -15,16 +15,16 @@ const Events = () => {
     isFree: '',
   });
 
-    useEffect(() => {
-      const currentCity = city || eventCity || '';
-      if (currentCity) {
-        getEventsByCity(currentCity);
-      } else {
-        // No city specified - load all published events
-        getAllEvents();
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [city, eventCity]);
+  useEffect(() => {
+    const currentCity = city || eventCity || '';
+    if (currentCity) {
+      getEventsByCity(currentCity);
+    } else {
+      // No city specified - load all published events
+      getAllEvents();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [city, eventCity]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -108,9 +108,11 @@ const Events = () => {
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-pink"></div>
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        <div className={`grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 ${events.length >= 0 ? 'h-[80vh] md:h-[70vh] overflow-y-scroll ' : ''}`}>
           {events.map((event) => (
-            <EventCard key={event._id} event={event} />
+            <div>
+              <EventCard key={event._id} event={event} />
+            </div>
           ))}
         </div>
       )}
