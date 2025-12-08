@@ -46,6 +46,9 @@ organizerEventRouter.post(
         return res.status(500).json({ message: 'Cloudinary upload failed' });
       }
 
+      console.log("uploadResult.secure_url: ",uploadResult.secure_url);
+      
+
       res.status(201).json({
         url: uploadResult.secure_url,
         publicId: uploadResult.public_id,

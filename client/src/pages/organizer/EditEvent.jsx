@@ -250,7 +250,9 @@ const EditEvent = () => {
             className="w-full px-4 py-2 outline-none border border-gray-300 rounded-md focus:border-primary-pink"
           />
           {uploadingImages && (
-            <p className="mt-2 text-sm text-gray-500">Uploading images...</p>
+            <div className='mt-2'>
+              <div className="animate-spin rounded-full h-4 w-4 border border-t-0 border-primary-pink"></div>
+            </div>
           )}
           {formData.images.length > 0 && (
             <div className="mt-4 grid grid-cols-4 gap-4">

@@ -36,7 +36,7 @@ async function start() {
     // Handle server errors gracefully
     server.on('error', (err) => {
       if (err.code === 'EADDRINUSE') {
-        console.error(`❌ Port ${PORT} is already in use. Trying port ${PORT + 1}...`);
+        console.error(`Port ${PORT} is already in use. Trying port ${PORT + 1}...`);
         server.listen(PORT + 1, () => {
           console.log(`Server running on port: http://localhost:${PORT + 1}`);
         });

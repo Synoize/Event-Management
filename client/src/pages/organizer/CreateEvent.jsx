@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useEvents } from '../../contexts/EventContext';
+import { toast } from 'sonner';
 
 const CreateEvent = () => {
   const navigate = useNavigate();
@@ -53,30 +54,29 @@ const CreateEvent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Basic client-side validation
     if (!formData.title.trim()) {
-      return alert('Title is required');
+      return toast.warning('Title is required');
     }
     if (!formData.startTime || !formData.endTime) {
-      return alert('Start time and end time are required');
+      return toast.warning('Start time and end time are required');
     }
 
     const start = new Date(formData.startTime);
     const end = new Date(formData.endTime);
     if (isNaN(start.getTime()) || isNaN(end.getTime())) {
-      return alert('Invalid start or end time');
+      return toast.warning('Invalid start or end time');
     }
     if (end <= start) {
-      return alert('End time must be after start time');
+      return toast.warning('End time must be after start time');
     }
 
     const capacityNum = parseInt(formData.capacity, 10);
     const feeNum = parseFloat(formData.enrollmentFee || '0');
     if (isNaN(capacityNum) || capacityNum <= 0) {
-      return alert('Capacity must be a positive number');
+      return toast.warning('Capacity must be a positive number');
     }
     if (isNaN(feeNum) || feeNum < 0) {
-      return alert('Enrollment fee must be 0 or a positive number');
+      return toast.warning('Enrollment fee must be 0 or a positive number');
     }
 
     const eventData = {
@@ -104,11 +104,10 @@ const CreateEvent = () => {
         navigate('/organizer/events');
       } else {
         // Show server-provided error if any
-        alert(result.error || 'Failed to create event');
+        toast.warning(result.error || 'Failed to create event');
       }
     } catch (err) {
-      console.error('Create event error:', err);
-      alert('An unexpected error occurred while creating the event');
+      toast.error('An unexpected error occurred while creating the event');
     }
   };
 
@@ -255,8 +254,8 @@ const CreateEvent = () => {
             className="w-full px-4 py-2 outline-none border border-gray-300 rounded-md focus:border-primary-pink"
           />
           {uploadingImages && (
-            <div>
-              <div className="animate-spin rounded-full h-4 w-4 border-2 border-primary-pink"></div>
+            <div className='mt-2'>
+              <div className="animate-spin rounded-full h-4 w-4 border border-t-0 border-primary-pink"></div>
             </div>
           )}
           {formData.images.length > 0 && (
@@ -284,7 +283,7 @@ const CreateEvent = () => {
         <div className="flex space-x-4 text-sm pt-4">
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading && uploadingImages}
             className="flex-1 flex justify-center items-center bg-primary-pink/90 hover:bg-primary-pink text-white rounded-md font-medium disabled:opacity-50 h-10"
           >
             {loading ? (
