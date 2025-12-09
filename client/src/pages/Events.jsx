@@ -110,7 +110,7 @@ const Events = () => {
       ) : (
         <div className={`grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 ${events.length !== 0 ? 'h-[80vh] md:h-[70vh] overflow-y-scroll ' : ''}`}>
           {events.map((event) => (
-            <div key={event?._id}>
+            <div key={event?._id} className='opacity-90 hover:opacity-100'>
               <EventCard event={event} />
             </div>
           ))}

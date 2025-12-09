@@ -8,6 +8,9 @@ export const razorpayWebhookRouter = Router();
 
 const razorpaySecret = process.env.RAZORPAY_WEBHOOK_SECRET || 'webhook_secret';
 
+console.log("razorpaySecret: ", razorpaySecret);
+
+
 razorpayWebhookRouter.post('/payment.captured', async (req, res) => {
   const { event: eventType, payload } = req.body;
 

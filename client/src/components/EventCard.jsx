@@ -12,7 +12,7 @@ const EventCard = ({ event }) => {
           className="w-full h-48 object-cover"
         />
       ) : (
-        <div className="w-full h-24 md:h-40 bg-gradient-to-br from-primary-pink to-primary-orange opacity-90 hover:opacity-100 flex items-center justify-center">
+        <div className="w-full h-24 md:h-40 bg-gradient-to-br from-primary-pink to-primary-orange flex items-center justify-center">
           <span className="text-white text-2xl font-bold uppercase">{event.title.charAt(0)}</span>
         </div>
       )}

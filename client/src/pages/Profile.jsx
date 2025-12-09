@@ -26,7 +26,7 @@ console.log("user: ", user);
                 </h1>
 
                 {/* Profile Card */}
-                <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10">
+                <div className="flex flex-col md:flex-row items-start gap-6 md:gap-10">
 
                     {/* Avatar */}
                     <div className="relative">

@@ -95,8 +95,6 @@ const HeroSection = () => {
 
          {/* MOBILE BOTTOM SECTION */}
         <div className="flex gap-4 h-52 overflow-hidden md:hidden">
-
-          {/* COLUMN 1 (scroll DOWN) */}
           <motion.div
             className="flex flex-row gap-4"
             animate={{ x: ["0%", "-100%"] }}
@@ -110,7 +108,7 @@ const HeroSection = () => {
               <img
                 key={i}
                 src={src}
-                className="w-34 h-34 md:w-52 md:h-60 object-cover "
+                className="w-34 h-34 md:w-52 md:h-60 object-cover"
               />
             ))}
           </motion.div>

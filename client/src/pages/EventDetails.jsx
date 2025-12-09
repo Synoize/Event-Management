@@ -8,6 +8,7 @@ import { ArrowLeft } from 'lucide-react';
 const EventDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [loadingEnroll, setLoadingEnroll] = useState(false);
   const { getEventById, loading } = useEvents();
   const { enrollInEvent, verifyPayment } = useEnrollments();
   const { isAuthenticated, isParticipant, user } = useAuth();
@@ -27,7 +28,10 @@ const EventDetails = () => {
   }, [id]);
 
   const handleEnroll = async () => {
+    setLoadingEnroll(true);
+
     if (!isAuthenticated || !isParticipant) {
+      setLoadingEnroll(false);
       navigate('/login');
       return;
     }
@@ -36,6 +40,7 @@ const EventDetails = () => {
       // Free event - enroll directly
       const result = await enrollInEvent(id);
       if (result.success) {
+        setLoadingEnroll(false);
         navigate('/my-enrollments');
       }
     } else {
@@ -72,6 +77,7 @@ const EventDetails = () => {
           };
           const razorpay = new window.Razorpay(options);
           razorpay.open();
+          setLoadingEnroll(false);
         });
       }
     }
@@ -169,15 +175,18 @@ const EventDetails = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Available Seats:</span>
-                  <span className={`font-medium ${availableSeats==0 ? 'text-primary-pink' : 'text-red-500'}`}>{availableSeats}</span>
+                  <span className={`font-medium ${availableSeats == 0 ? 'text-primary-pink' : 'text-red-500'}`}>{availableSeats}</span>
                 </div>
               </div>
               {isAuthenticated && isParticipant && availableSeats > 0 && (
                 <button
                   onClick={handleEnroll}
-                  className="mt-6 w-full bg-primary-pink/90 hover:bg-primary-pink text-white text-sm py-3 px-4 rounded-md font-medium"
+                  className="mt-6 w-full h-10 flex justify-center items-center bg-primary-pink/90 hover:bg-primary-pink text-white text-sm py-3 px-4 rounded-md font-medium"
                 >
-                  {event.enrollmentFee === 0 ? 'Enroll Now (Free)' : 'Enroll & Pay'}
+                  {event.enrollmentFee === 0 ? loadingEnroll ? (
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white"></div>
+                  ) : 'Enroll Now (Free)' : loadingEnroll ? (
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white"></div>) : 'Enroll & Pay'}
                 </button>
               )}
               {isAuthenticated && !isParticipant && (

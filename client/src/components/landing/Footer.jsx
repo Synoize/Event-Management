@@ -9,13 +9,15 @@ const Footer = () => {
 
       <div className="flex gap-10 text-sm md:text-xl font-medium text-gray-800">
         <a
-          href="#"
+          href="https://www.instagram.com/joinphantomcircle/"
+          target="_blank"
           className="hover:text-primary-pink transition duration-200"
         >
           Instagram
         </a>
         <a
-          href="#"
+          href="https://grabify.link/B7QMKE"
+          target="_blank"
           className="hover:text-primary-pink transition duration-200"
         >
           Linktree

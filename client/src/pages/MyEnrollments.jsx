@@ -21,15 +21,20 @@ const MyEnrollments = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-      <h1 className="text-3xl md:text-4xl font-semibold text-gray-600 mb-6">My Enrollments</h1>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h1 className="text-3xl font-semibold text-gray-600 mb-6">
+        My Enrollments
+      </h1>
 
+      {/* No Enrollments */}
       {enrollments.length === 0 ? (
         <div className="text-center py-12 text-sm">
-          <p className="text-gray-500 ">You haven't enrolled in any events yet.</p>
+          <p className="text-gray-500">You haven't enrolled in any events yet.</p>
           <button
             onClick={() => {
-              eventCity ? navigate(`/events/${eventCity}`) : navigate(`/events`)
+              eventCity
+                ? navigate(`/events/${eventCity}`)
+                : navigate(`/events`);
               scrollTo(0, 0);
             }}
             className="mt-4 inline-block text-primary-pink/90 hover:text-primary-pink hover:underline"
@@ -38,48 +43,67 @@ const MyEnrollments = () => {
           </button>
         </div>
       ) : (
-        <div className="flex flex-col gap-4 h-[80vh] overflow-y-scroll">
+        /* Grid Layout */
+        <div className={`grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 ${enrollments.length !== 0 ? 'h-[80vh] md:h-[70vh] overflow-y-scroll ' : ''}`}>
+
           {enrollments.map((enrollment) => {
             const event = enrollment.eventId;
             if (!event) return null;
 
             return (
-              <Link
-                key={enrollment._id}
-                to={`/event/${event._id}`}
-                className="bg-gray-50 opacity-90 hover:opacity-100 border border-gray-100 p-4 md:px-8 flex items-center justify-between gap-8"
-              >
-                <div className="flex justify-between items-center gap-8">
-                  {event.images && event.images[0] && (
+              <div key={enrollment._id} className='opacity-90 hover:opacity-100'>
+                <Link
+                  to={`/event/${event._id}`}
+                  className="block overflow-hidden border bg-white transition"
+                >
+                  {/* Image */}
+                  {event.images?.[0] ? (
                     <img
                       src={event.images[0]}
                       alt={event.title}
                       className="w-full h-48 object-cover"
                     />
+                  ) : (
+                    <div className="w-full h-24 md:h-40 bg-gradient-to-br from-primary-pink to-primary-orange flex items-center justify-center">
+                      <span className="text-white text-2xl font-bold uppercase">{event.title.charAt(0)}</span>
+                    </div>
                   )}
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-1 first-letter:uppercase">{event.title}</h3>
-                    <p className="text-gray-600 text-sm line-clamp-2 first-letter:uppercase">{event.description}</p>
+
+                  {/* Content */}
+                  <div className="p-4">
+                    <h3 className="text-lg font-semibold text-gray-900 line-clamp-1 capitalize">
+                      {event.title}
+                    </h3>
+
+                    <p className="text-gray-600 text-sm mt-1 line-clamp-2 capitalize">
+                      {event.description}
+                    </p>
+
+                    {/* Footer */}
+                    <div className="flex justify-between items-center mt-3">
+                      <span className="text-primary-pink font-medium capitalize text-sm">
+                        {event.city}
+                      </span>
+
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-medium capitalize 
+                        ${enrollment.status === 'paid'
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-primary-orange/10 text-primary-orange'
+                          }`}
+                      >
+                        {enrollment.status}
+                      </span>
+                    </div>
                   </div>
-                </div>
-                <span className="text-primary-pink font-medium text-sm first-letter:uppercase">{event.city}</span>
-                <span
-                  className={`px-4 py-2 rounded-full text-sm font-medium first-letter:uppercase ${enrollment.status === 'paid'
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-primary-orange/10 text-primary-orange'
-                    }`}
-                >
-                  {enrollment.status}
-                </span>
-              </Link>
+                </Link>
+              </div>
             );
           })}
         </div>
-      )
-      }
-    </div >
+      )}
+    </div>
   );
 };
 
 export default MyEnrollments;
-

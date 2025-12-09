@@ -11,6 +11,7 @@ const GallerySponsors = () => {
             <img
               src={img}
               alt={`gallery-${i}`}
+              loading="lazy"
               className="w-full h-48 object-cover hover:scale-110 transition-all duration-300"
             />
           </div>
@@ -29,7 +30,7 @@ const GallerySponsors = () => {
               key={index}
               className="flex flex-col items-center opacity-80 hover:opacity-100 transition"
             >
-              <img src={sponsor.src} alt={sponsor.name} className="h-12 object-contain" />
+              <img src={sponsor.src} alt={sponsor.name} loading="lazy" className="h-12 object-contain" />
               <p className="text-xs mt-2 text-gray-600">{sponsor.name}</p>
             </div>
           ))}
